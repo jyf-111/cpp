@@ -7,13 +7,14 @@ struct array{
     int a[100001];
     int n;
 };
-int sub(array *a);
+int sub(array *a, int left , int right);
 
 #include<iostream>
 
+#define max3(a,b,c) ((a>b)?a:(b>c)?b:c) //宏定义，三数最大值
+
 int main()
 {
-    
     array *a = new array;
     int n;
     //输入个数
@@ -24,12 +25,43 @@ int main()
     for(int i = 0 ; i < a->n ; i++){
         std::cin >> a->a[i] ;
     }
-    std::cout << sub(a) << std::endl;
-
+    std::cout << sub(a,0,a->n-1) << std::endl;
+    //释放new出的数组
     delete[] a;
     return 0;
 }
 
-int sub(array *a){
-    
+int sub(array *a, int left ,int right){
+
+    int mid = (left+right) / 2 ;
+
+    int leftmaxsum = 0 ;
+    int rightmaxsum = 0 ;     
+
+    int leftms = 0 ; //左侧最大值
+    int rightms = 0 ; //右侧最大值
+    //退出条件
+    if(left == right){
+        return a->a[left] ;
+    }
+    leftms = sub(a,left,mid); //左最大子序列和 
+    rightms = sub(a,mid+1,right); //右最大子序列和
+
+    int tempsum = 0;
+
+    for(int i = mid ; i >= 0 ; i--){
+        tempsum+=a->a[i];
+        if(tempsum>leftmaxsum){
+            leftmaxsum = tempsum;
+        }
+    }
+
+    tempsum = 0;
+    for(int i = mid+1 ; i <= right ; i++){
+        tempsum+=a->a[i];
+        if(tempsum>rightmaxsum){
+            rightmaxsum = tempsum;
+        }
+    }
+    return max3(leftms,rightms,leftmaxsum+rightmaxsum);
 }
