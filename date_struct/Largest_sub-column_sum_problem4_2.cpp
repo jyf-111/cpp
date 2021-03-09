@@ -26,7 +26,7 @@ Sample Output:
 struct array{
     int a[100001];
     int n;
-    int flag = 0 ;
+    int flag = 0 ;//没有最大为0，有最大是1
 };
 int sub(array *a,int & , int &);
 
@@ -67,11 +67,11 @@ int sub(array *a,int& begin ,int& end){
         if(thissum>maxsum){ //当前和大于最大和，重制最大和
             a->flag=1;//出现过最大
             maxsum=thissum;
-            begin = prebegin ; 
+            begin = prebegin ; //结束时把预存的存储
             end = i ;
         }else if(thissum<0){ //当前和是0舍弃
             thissum=0;
-            prebegin = i + 1 ;
+            prebegin = i + 1 ;//预存储
         }
     }
     return maxsum;
