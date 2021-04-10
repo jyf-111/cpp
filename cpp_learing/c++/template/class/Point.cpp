@@ -34,6 +34,7 @@ int main()
 
     Point p2 = p1;  //拷贝委托+1
     Point::getcount();
+     
     distance(p1,p2);
     }
     
