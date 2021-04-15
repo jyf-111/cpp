@@ -23,3 +23,109 @@ For each test case, print the root of the resulting AVL tree in one line.
 
 88
 */
+
+#include<iostream>
+using namespace std;
+#define Max(a,b) (a>b?a:b)
+
+typedef struct TreeNode *Tree;
+struct TreeNode
+{
+    Tree Left;
+    Tree Right;
+    int date;
+    int height;
+};
+
+Tree NewNode(int t)
+{
+    Tree T = new struct TreeNode;
+    T->date = t;
+    T->height = 0;
+    T->Left = T->Right = nullptr;
+    return T;
+}
+
+int GetNodeHeight(Tree T)//判断一个结点的高度：到叶子节点的最短路径
+{
+    return (T ? T->height : -1) ;
+}
+
+Tree SingleLeftRotation(Tree A)//左单旋 向右转
+{
+    Tree B = A->Left;
+    A->Left = B->Right;//防止忽略B的右子树
+    B->Right = A;
+    //调整结束
+    A->height = Max(GetNodeHeight(A->Left),GetNodeHeight(A->Right))+1;
+    B->height = Max(GetNodeHeight(B->Left),GetNodeHeight(B->Right))+1;
+    return B;
+}
+
+Tree SingleRightRotation(Tree A)
+{
+    Tree B = A->Right;
+    A->Right = B->Left;
+    B->Left = A;
+
+    A->height = Max(GetNodeHeight(A->Left),GetNodeHeight(A->Right))+1;
+    B->height = Max(GetNodeHeight(B->Left),GetNodeHeight(B->Right))+1;
+    return B;
+}
+
+Tree DoubleLeftRightRotation(Tree A)
+{
+    //B和C做右单旋，返回C
+    A->Left = SingleRightRotation(A->Left);
+    //A和C做左单旋
+    return SingleLeftRotation(A);
+}
+
+Tree DoubleRightLeftRotation(Tree A)
+{
+    //B和C做zuo单旋，返回C
+    A->Right = SingleLeftRotation(A->Right);
+    //A和C做you单旋
+    return SingleRightRotation(A);
+}
+
+Tree insert(Tree T, int t) {
+	if (!T) {
+		T = NewNode(t);//建立一棵树的头结点 
+	}
+	else {
+		if (t > T->date) {//待插入的数据大于当前结点数据，则应该插在其右子树上面
+			T->Right = insert(T->Right, t);
+			if (GetNodeHeight(T->Right) - GetNodeHeight(T->Left) == 2) {
+				if (t > T->Right->date) {
+					T = SingleRightRotation(T);
+				}
+				else T = DoubleRightLeftRotation(T);
+			}
+		}
+		else {
+			T->Left = insert(T->Left, t);
+			if (GetNodeHeight(T->Left) - GetNodeHeight(T->Right) == 2) {
+				if (t < T->Left->date) {
+					T = SingleLeftRotation(T);
+				}
+				else T = DoubleLeftRightRotation(T);
+			}
+		}
+	}
+	T->height = Max(GetNodeHeight(T->Left), GetNodeHeight(T->Right)) + 1;
+	return T;
+}
+int main() {
+	int N,t;
+	cin >> N>>t;
+	Tree T = NewNode(t);
+	for (int i = 1; i < N; i++)
+	{		
+		cin >> t;
+		T = insert(T, t);
+	}
+	if (T)cout << T->date << endl;//T里面有内容认为是真，否则为假
+	//system("pause");
+	return 0;
+}

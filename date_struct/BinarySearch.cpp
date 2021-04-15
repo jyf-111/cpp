@@ -14,7 +14,8 @@ struct LNode {
     Position Last; /* 保存线性表中最后一个元素的位置 */
 };
 
-List ReadInput(); /* 裁判实现，细节不表。元素从下标1开始存储 */
+List ReadInput(); /* 元素从下标1开始存储 */
+
 Position BinarySearch( List L, ElementType X );
 
 int main()
@@ -53,6 +54,7 @@ Position BinarySearch( List L, ElementType X ){
     }
     return position ;
 }
+
 List ReadInput(){
     List L=(List)malloc(sizeof(struct LNode)); ;
     scanf("%d",&L->Last);

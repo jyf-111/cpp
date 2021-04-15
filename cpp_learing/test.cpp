@@ -1,99 +1,83 @@
-#include <iostream>
+#include<cstdio>
+#define MaxSize 10005
+typedef int SetType; 
 using namespace std;
-
-typedef struct TreeNode *Tree;
-struct TreeNode {
-	Tree Left;
-	Tree Right;
-	int data;
-	int height;
-};
-
-Tree NewNode(int t) {
-	Tree T;
-	T = new struct TreeNode;
-	T->Left = T->Right = NULL;
-	T->data = t;
-	T->height = 0;//二叉树中结点的高度即该结点到叶子结点的路径长度
-	return T;
-}
-int Max(int a, int b) {
-	return a > b ? a : b;
-}
-int GetNodeHeight(Tree T) {//判断一个结点的高度：到叶子节点的最短路径
-	if (!T)return -1;
-	else {
-		return T->height;
-	}
+// 初始化 
+void Init(SetType s[],int n){
+	for(int i=0;i<n;i++)
+		s[i] = -1;
 }
 
-Tree SingleLeftRotation(Tree A) {//左单旋 向右转
-	Tree B = A->Left;
-	A->Left = B->Right;//防止忽略B的右子树
-	B->Right = A;
-	//调整结束
-	A->height = Max(GetNodeHeight(A->Left), GetNodeHeight(A->Right))+1;
-	B->height = Max(GetNodeHeight(A), GetNodeHeight(B->Left)) + 1;
-	return B;
-}
-Tree SingleRightRotation(Tree A) {//
-	Tree B = A->Right;
-	A->Right = B->Left;
-	B->Left = A;
-	A->height = Max(GetNodeHeight(A->Left), GetNodeHeight(A->Right)) + 1;
-	B->height = Max(A->height, GetNodeHeight(B->Right)) + 1;
-	return B;
-}
-Tree DoubleLeftRightRotation(Tree A) {
-	//B和C做右单旋，返回C
-	A->Left = SingleRightRotation(A->Left);
-	//A和C做左单旋
-	return SingleLeftRotation(A);
-}
-Tree DoubleRightLeftRotation(Tree A) {
-	//B和C做zuo单旋，返回C
-	A->Right = SingleLeftRotation(A->Right);
-	//A和C做you单旋
-	return SingleRightRotation(A);
+// 查找 
+int Find(SetType s[],int x){
+	if(s[x] < 0)  // 本身已经是根 
+		return x;
+	else  // 1. 找到根  2. 把根变成 x 的父结点  3.再返回根 
+		return s[x] = Find(s,s[x]);
+} 
+
+// 并
+void Union(SetType s[],int x1,int x2){
+	// x1 规模更大，负数啊！ 
+	if(s[x1] < s[x2]){
+		s[x1] += s[x2];    //  两树合并，规模相加 
+		s[x2] = x1;   // x2 挂到 x1 上 
+	}else{
+		s[x2] += s[x1];   //  两树合并，规模相加 
+		s[x1] = x2;
+	}
+} 
+
+//连接
+void Input_connection(SetType s[]){
+	int x1,x2;
+	scanf("%d %d",&x1,&x2);
+	int root1 = Find(s,x1-1);  // 以数组下标存值，下标与存值差 1 
+	int root2 = Find(s,x2-1);
+	if(root1 != root2)
+		Union(s,root1,root2);
 }
 
-Tree insert(Tree T, int t) {
-	if (!T) {
-		T = NewNode(t);//建立一棵树的头结点 
-	}
-	else {
-		if (t > T->data) {//待插入的数据大于当前结点数据，则应该插在其右子树上面
-			T->Right = insert(T->Right, t);
-			if (GetNodeHeight(T->Right) - GetNodeHeight(T->Left) == 2) {
-				if (t > T->Right->data) {
-					T = SingleRightRotation(T);
-				}
-				else T = DoubleRightLeftRotation(T);
-			}
-		}
-		else {
-			T->Left = insert(T->Left, t);
-			if (GetNodeHeight(T->Left) - GetNodeHeight(T->Right) == 2) {
-				if (t < T->Left->data) {
-					T = SingleLeftRotation(T);
-				}
-				else T = DoubleLeftRightRotation(T);
-			}
-		}
-	}
-	T->height = Max(GetNodeHeight(T->Left), GetNodeHeight(T->Right)) + 1;
-	return T;
+//检查连接
+void check_connection(SetType s[]){
+	int x1,x2;
+	scanf("%d %d",&x1,&x2);
+	int root1 = Find(s,x1-1);
+	int root2 = Find(s,x2-1);
+	if(root1 == root2)
+		printf("yes\n");
+	else
+		printf("no\n");
+} 
+
+// 检查网络
+void check_network(SetType s[],int n){
+	int counter = 0;
+	for(int i=0;i<n;i++)
+		if(s[i] < 0)
+			counter++;
+	if(counter == 1)
+		printf("The network is connected.");
+	else
+		printf("There are %d components.",counter);
 }
-int main() {
-	int N,t;
-	cin >> N>>t;
-	Tree T = NewNode(t);
-	for (int i = 1; i < N; i++)
-	{		
-		cin >> t;
-		T = insert(T, t);
-	}
-	if (T)cout << T->data << endl;//T里面有内容认为是真，否则为假
-	system("pause");
+
+
+int main(){
+	int n;
+	char in;
+	scanf("%d",&n); 
+	SetType s[MaxSize];
+	Init(s,n);
+	do{
+		getchar();  // 接收每次多出来的回车 
+		scanf("%c",&in);
+		switch(in){
+			case 'I':Input_connection(s);break;
+			case 'C':check_connection(s);break;
+			case 'S':check_network(s,n);break;
+		}		
+	}while(in != 'S');
+
 	return 0;
-}
+} 

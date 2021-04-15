@@ -41,7 +41,7 @@ int sub(array *a){
 
             maxsum=thissum;
             
-        }else if(thissum<0){ //当前和是0舍弃
+        }else if(thissum<0){ //当前和小于0舍弃
             thissum=0;
         }
     }
