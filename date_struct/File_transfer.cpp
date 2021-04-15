@@ -68,6 +68,55 @@ void Init(SetType s[],int n)
 }
 
 // 查找 
+int Find(SetType s[],int x) {
+    if(s[x] < 0) return x;// 本身已经是根 
+    // 1. 找到根  2. 把根变成 x 的父结点  3.再返回根 
+    else return s[x] = Find(s,s[x]); 
+}
+// 并
+void Union(SetType s[],int x1,int x2) {
+    // x1 规模更大，负数啊！ 
+    if(s[x1] < s[x2]) {
+        s[x1]+=s[x2];
+        s[x2] = x1; // x2 挂到 x1 上 
+    }else{
+        s[x2]+=s[x1];
+        s[x1] = x2;
+    }
+}
+//连接
+void Input_connection(SetType s[]) {
+    int x1,x2;
+    cin >> x1>>x2;
+    // 以数组下标存值，下标与存值差 1 
+    int root1 = Find(s,x1-1);
+    int root2 = Find(s,x2-1);
+    if(root1 != root2)
+		Union(s,root1,root2);
+}
+
+//检查连接
+void check_connection(SetType s[]) {
+    int x1,x2;
+    cin >> x1 >> x2;
+    int root1 = Find(s,x1-1);
+    int root2 = Find(s,x2-1);
+    cout << (root1 == root2 ?"yes":"no") << endl;
+}
+
+void check_network(SetType s[],int n) {
+    int counter = 0;
+    for(int i = 0; i<n ; ++i) {
+        if(s[i]<0) {
+            ++counter;
+        }
+    }
+    if(counter == 1){
+        cout << "The network is connected.";
+    }else{
+        cout << "There are " << counter <<" components.";
+    }
+}
 
 int main()
 {
