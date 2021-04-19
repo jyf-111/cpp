@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SQUARE_H
+#define SQUARE_H
 #include<iostream>
 class Square{
 private:
@@ -23,3 +24,4 @@ public:
         numberOfObjects--;
     }
 };
+#endif

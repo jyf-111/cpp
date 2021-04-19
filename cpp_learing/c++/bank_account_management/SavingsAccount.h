@@ -1,7 +1,5 @@
-#include<iostream>
-#include<cmath>
-using namespace std;
-
+#ifndef SAVINGSACCOUNT_H
+#define SAVINGSACCOUNT_H
 class SavingsAccount { //储蓄类账户
  private:
     int id; //账号
@@ -20,11 +18,7 @@ class SavingsAccount { //储蓄类账户
     double getRate() {return rate;}
     void deposit(int date,double amount);
     void withdraw(int date,double amount);
-    void steele(int date);//结算利息，每年1月1日调用一次该函数
+    void settle(int date);//结算利息，每年1月1日调用一次该函数
     void show();//显示账户信息
 };
-
-SavingsAccount::SavingsAccount(int date,int id,double rate) 
-: id(id),balance(0),rate(rate),lastDate(date),accumulation(0) {
-
-} 
+#endif

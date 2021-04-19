@@ -6,7 +6,7 @@ public:
     A() {cout<<"A( )"<<endl;}
     A(int x) {cout<<"A("<<x<<")"<<endl;}
 };
-class B : public A{
+class B : public A{//基类公有保护可，私有不可
 public:
     B() {cout<<"B( )"<<endl;}
     B(int x) {cout<<"B("<<x<<")"<<endl;}

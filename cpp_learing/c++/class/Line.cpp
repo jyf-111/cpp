@@ -10,8 +10,8 @@ class Point
         y = yy;
     }
     Point(Point &p);
-    int getX(){return x;}
-    int getY(){return y;}
+    int getX()const{return x;}
+    int getY()const{return y;}
  private:
     int x,y;
 };
@@ -27,16 +27,13 @@ class Line
  public:
     Line(Point xp1,Point xp2);
     Line(Line &l);
-    double getLen() {return len;}
+    double getLen() const ;
  private:
     Point p1,p2;
-    double len;
+    mutable double len;     //可修改尽管const
 };
 Line::Line(Point xp1,Point xp2) : p1(xp1),p2(xp2) {
     cout << "calling the constructor of Line" << endl;
-    double x = static_cast<double>(p1.getX()-p2.getX());
-    double y = static_cast<double>(p1.getY()-p2.getY());
-    len = sqrt(x*x+y*y);
 }
 
 Line::Line(Line &l) :p1(l.p1),p2(l.p2) {
@@ -44,6 +41,12 @@ Line::Line(Line &l) :p1(l.p1),p2(l.p2) {
     len = l.len;
 }
 
+double Line::getLen() const {
+    double x = static_cast<double>(p1.getX()-p2.getX());
+    double y = static_cast<double>(p1.getY()-p2.getY());
+    len = sqrt(x*x+y*y);
+    return len;
+}
 int main()
 {
     Point myP1(1,1),myP2(4,5);
