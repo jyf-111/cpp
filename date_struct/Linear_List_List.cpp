@@ -6,7 +6,7 @@ typedef struct LNode *PtrToLNode,*Position;
 
 struct LNode
 {
-    ElementType Date;
+    ElementType Data;
     PtrToLNode Next;
 };
 /*寻找*/
@@ -43,7 +43,7 @@ int Find(PtrToLNode L,ElementType X)
 {
     int cnt=0;
     Position P;
-    for(P=L->Next ; P->Date != X && P!=NULL;P=P->Next){
+    for(P=L->Next ; P->Data != X && P!=NULL;P=P->Next){
         cnt++;
     }
     if(P==NULL){
@@ -70,7 +70,7 @@ bool Insert(PtrToLNode L,ElementType X,int P)
         /*新节点*/
         PtrToLNode temp;
         temp=(PtrToLNode)malloc(sizeof(LNode));
-        temp->Date=X;
+        temp->Data=X;
         temp->Next=pre->Next;
         pre->Next=temp;
         return true;
@@ -88,7 +88,7 @@ bool Delete(PtrToLNode L,int P)
         return 0;
     }else{
         pre->Next=temp->Next;
-        printf("number %d has deleted\n",temp->Date);
+        printf("number %d has deleted\n",temp->Data);
         free(temp);
         return 1;
     }

@@ -6,7 +6,7 @@ typedef struct SNode *Stack;
 
 struct SNode
 {
-    ElementType *Date;
+    ElementType *Data;
     Position Top;
     int MaxSize;
 };
@@ -14,7 +14,7 @@ struct SNode
 Stack CreateStack(int MaxSize)
 {
     Stack S = (Stack)malloc(sizeof(struct SNode));
-    S->Date=(ElementType*)malloc(MaxSize*sizeof(ElementType));
+    S->Data=(ElementType*)malloc(MaxSize*sizeof(ElementType));
     S->Top=-1;
     S->MaxSize=MaxSize;
     return S;
@@ -36,7 +36,7 @@ bool Push(Stack S,ElementType X)
         printf("The stack is full\n");
         return false;
     }else{
-        S->Date[++(S->Top)]=X;
+        S->Data[++(S->Top)]=X;
         return true;
     }
 
@@ -48,7 +48,7 @@ ElementType Pop(Stack S)
         printf("The stack is empty\n");
         return false;
     }else{
-        return S->Date[(S->Top)--];
+        return S->Data[(S->Top)--];
     }
 }
 int main()

@@ -10,12 +10,12 @@ using ElementType = int;
 
 class Stack {
  private:
-    ElementType date[Maxsize];
+    ElementType data[Maxsize];
     mutable int top = -1;
  public:
     Stack( ) = default;
-    void push(ElementType X) {date[++top] = X;}
-    ElementType pop() const {return date[top--];};
+    void push(ElementType X) {data[++top] = X;}
+    ElementType pop() const {return data[top--];};
     ~Stack() = default;
 };
 

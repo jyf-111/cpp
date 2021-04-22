@@ -9,7 +9,7 @@ typedef int ElementType;
 typedef struct QNode *Queue;
 struct QNode
 {
-    ElementType *Date;
+    ElementType *Data;
     Position Front,Rear;
     int MaxSize;
 };
@@ -19,7 +19,7 @@ struct QNode
 Queue CreateQueue(int MaxSize)
 {
     Queue Q=(Queue)malloc(sizeof(struct QNode));
-    Q->Date=(ElementType*)malloc(MaxSize*sizeof(ElementType));
+    Q->Data=(ElementType*)malloc(MaxSize*sizeof(ElementType));
     Q->Front=Q->Rear=0;
     Q->MaxSize=MaxSize;
     return Q;
@@ -42,7 +42,7 @@ bool AddQ(Queue S,ElementType X)
         return false;
     }else{
         S->Rear=(S->Rear+1)%S->MaxSize;
-        S->Date[S->Rear]=X;
+        S->Data[S->Rear]=X;
         return true;
     }
 }
@@ -54,7 +54,7 @@ ElementType DeleteQ(Queue Q)
         return false;
     }else{
         Q->Front =(Q->Front+1)%Q->MaxSize;
-        return  Q->Date[Q->Front];
+        return  Q->Data[Q->Front];
     }
 }
 int main()

@@ -8,14 +8,14 @@ using PtrToDLList = DLList;
 
 struct LNode
 {
-    ElementType Date;
+    ElementType Data;
     PtrToDLList prior,next;
 };
 
 DLList InitDLList()
 {
     PtrToDLList node = (PtrToDLList)malloc(sizeof(struct LNode));
-    node->Date = 0;
+    node->Data = 0;
     node->next = node;
     node->prior = node;
     return node;
@@ -26,7 +26,7 @@ void printDLList(DLList L)
     PtrToDLList ptr = L->next;
     while(ptr != L)
     {
-        cout << ptr->Date <<' ';
+        cout << ptr->Data <<' ';
         ptr = ptr->next;
     }
     cout << endl;
@@ -40,7 +40,7 @@ void Insert(DLList L,int i,ElementType X)
     if(L->next == L){
         //链表为空
         PtrToDLList node = (PtrToDLList)malloc(sizeof(struct LNode));
-        node->Date = X;
+        node->Data = X;
         ptr->next = node;
         node->next = L;
         node->prior = ptr;
@@ -57,7 +57,7 @@ void Insert(DLList L,int i,ElementType X)
         if(ptr->next == L){
             //在最后一个位置后插入
             PtrToDLList node = (PtrToDLList)malloc(sizeof(struct LNode));
-            node->Date = X;
+            node->Data = X;
             ptr->next = node;
             node->next = L;
             node->prior = ptr;
@@ -67,7 +67,7 @@ void Insert(DLList L,int i,ElementType X)
             return ;
         }else {
             PtrToDLList node = (PtrToDLList)malloc(sizeof(struct LNode));
-            node->Date = X;
+            node->Data = X;
             node->next = ptr->next;
             node->prior = ptr;
             ptr->next->prior = node;

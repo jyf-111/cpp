@@ -6,7 +6,7 @@ typedef int Position;
 typedef int ElementType;
 typedef struct LNode *List;
 struct LNode{
-    ElementType Date[MAXSIZE];
+    ElementType Data[MAXSIZE];
     Position last;
 };
 /*初始化*/
@@ -52,9 +52,9 @@ bool Insert(List L,ElementType X,Position P)
         return false;
     }
     for(Position i = L->last ; i>=P ; i-- ){
-        L->Date[i+1]=L->Date[i];
+        L->Data[i+1]=L->Data[i];
     }
-    L->Date[P]=X;
+    L->Data[P]=X;
     ++L->last;
     return true;
 }
@@ -67,7 +67,7 @@ bool Delete(List L,Position P)
         return false;
     }
     for(Position i = P ; i < L->last ; i++ ){
-        L->Date[i]=L->Date[i+1];
+        L->Data[i]=L->Data[i+1];
     } 
     --L->last;
     return true;

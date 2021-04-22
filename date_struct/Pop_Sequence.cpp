@@ -45,7 +45,7 @@ NO
 #include<stdlib.h>
 typedef struct SNode
 {
-    int *Date;
+    int *Data;
     int Top;
     int MaxSize;
 }*Stack;
@@ -53,7 +53,7 @@ typedef struct SNode
 
 Stack InitStack(int M);
 
-void Push(Stack S,int Date);
+void Push(Stack S,int Data);
 
 void Pop(Stack S);
 
@@ -85,7 +85,7 @@ int main()
             //如果入栈元素等于序列元素
             
             for(;!IsEmpty(S);){
-                if(S->Date[S->Top]==a[k]){
+                if(S->Data[S->Top]==a[k]){
                     k++;
                     Pop(S);
                 }else{
@@ -104,21 +104,21 @@ int main()
 Stack InitStack(int M)
 {
     Stack S=(Stack)malloc(sizeof(struct SNode));
-    S->Date=(int*)malloc(M*sizeof(int));
+    S->Data=(int*)malloc(M*sizeof(int));
     S->Top=-1;//目前堆栈高
     S->MaxSize=M;//堆栈最大高 
     return S;
 }
-void Push(Stack S,int Date)
+void Push(Stack S,int Data)
 {
     if(!IsFull(S)){
-        S->Date[++S->Top]=Date;
+        S->Data[++S->Top]=Data;
     }
 }
 void Pop(Stack S)
 {
     if(!IsEmpty(S)){
-        S->Date[S->Top--];
+        S->Data[S->Top--];
     }
 }
 bool IsEmpty(Stack S)

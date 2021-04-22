@@ -15,10 +15,11 @@ class Point
 //静态成员函数可直接访问静态数据成员和私有成员
         static void getcount() { cout << "count = " <<count << endl;}
         ~Point( ) {--count;}
+        static int count ;
     private:
         float x;
         float y;
-        static int count ;
+    
 };
 float LineFit(const Point points[],int nPoint) {
     float avgx = 0,avgy = 0;
@@ -64,5 +65,12 @@ int main() {
    Point(75,80),Point(84,90),Point(100,100)};
     float r =  LineFit(p,10) ;
     cout<<"coefficient r = "<<r<< endl;
+
+    /*
+    指针访问成员
+    void (Point::*ptr)()const =&Point::getx;
+    (p1.*ptr)();
+    int *a = &Point::count;
+    cout << "count = "<<*a <<endl;*/
     return 0;
 }

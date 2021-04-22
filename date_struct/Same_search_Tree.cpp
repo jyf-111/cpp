@@ -36,7 +36,7 @@ using namespace std;
 typedef struct TNode* Tree;
 struct TNode
 {
-    int date;
+    int data;
     Tree left,right;
     int flag;
 };
@@ -93,7 +93,7 @@ Tree treeNewNode(int v )
 {
     Tree T;
     T = (Tree)malloc(sizeof(struct TNode));
-    T->date = v ;
+    T->data = v ;
     T->left = nullptr;
     T->right = nullptr;
     T->flag = 0; 
@@ -104,7 +104,7 @@ Tree insert(Tree T,int v)
 {
     if(!T) {
         T = treeNewNode(v);
-    }else if(v > T->date){T->right= insert(T->right,v);}
+    }else if(v > T->data){T->right= insert(T->right,v);}
     else {T->left = insert(T->left,v);}
     return T; 
 }
@@ -112,16 +112,16 @@ Tree insert(Tree T,int v)
 int check(Tree T,int v) 
 {
     if(T->flag){//判断节点有没有访问过
-        if(v > T->date){
+        if(v > T->data){
             check(T->right,v);
-        }else if(v < T->date){
+        }else if(v < T->data){
             check(T->left,v);
         }else{
             return 0;
         }
     }else{
         //如果访问过判断数值是不是一样
-        if(v == T->date){
+        if(v == T->data){
             T->flag = 1 ;
             return 1;
         }else{

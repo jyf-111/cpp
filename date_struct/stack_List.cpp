@@ -3,7 +3,7 @@ typedef int ElementType;
 typedef PtrToSNode Stack;
 struct SNode
 {
-    ElementType Date;
+    ElementType Data;
     PtrToSNode Next;
 };
 
@@ -31,7 +31,7 @@ bool Push(Stack S,ElementType X)
     /* 将元素X压入堆栈S */
     PtrToSNode TempCell;
     TempCell =(PtrToSNode)malloc(sizeof(struct SNode));
-    TempCell->Date=X;
+    TempCell->Data=X;
     /*头插法*/
     TempCell->Next=S->Next;
     S->Next=TempCell;
@@ -47,7 +47,7 @@ ElementType Pop(Stack S)
         PtrToSNode FirstCell=S->Next;
         ElementType FirstElement;
         S->Next=FirstCell->Next;
-        FirstElement=FirstCell->Date;
+        FirstElement=FirstCell->Data;
         free(FirstCell);
         return FirstElement;
     }

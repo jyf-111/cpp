@@ -6,7 +6,7 @@ using ElementType = int;
 
 struct Node
 {
-    ElementType date;
+    ElementType data;
     int curcor;
 }List[Maxsize];
 
@@ -14,12 +14,12 @@ struct Node
 void InitList()
 {
     for(int i = 1; i<Maxsize-1 ; i++){
-        List[i].date=0;
+        List[i].data=0;
         List[i].curcor=i+1;
     }
     List[0].curcor=Null;
     List[Maxsize-1].curcor=Null;
-    List[Maxsize-1].date=0;
+    List[Maxsize-1].data=0;
 }
 
 int getnode(int &av)
@@ -64,7 +64,7 @@ void Insert(int &s,int &av,ElementType X)
     space = getnode(av);
     if(space!=Null){
         List[s].curcor=space;
-        List[space].date = X;
+        List[space].data = X;
         List[space].curcor=Null;
         s=space;
     }
@@ -74,7 +74,7 @@ void printList()
 {
     int p = List[0].curcor;
     while(p !=Null){
-        cout << p <<" = "<<List[p].date << endl;
+        cout << p <<" = "<<List[p].data << endl;
         p = List[p].curcor;
     }
     cout << endl;

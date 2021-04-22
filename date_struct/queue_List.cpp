@@ -6,7 +6,7 @@ typedef struct QNode *Queue;
 struct Node
 {
     /* 队列中的结点 */
-    ElementType Date;
+    ElementType Data;
     PtrToNode Next;
 };
 struct QNode
@@ -35,7 +35,7 @@ Queue EnQueue(Queue Q,ElementType X)
 {
     PtrToNode Node=(PtrToNode)malloc(sizeof(Node));
     Node->Next=NULL;
-    Node->Date=X;
+    Node->Data=X;
     Q->Rear->Next=Node;
     Q->Rear=Node;
     return Q;
@@ -51,7 +51,7 @@ Queue DeQueue(Queue Q)
         temp=Q->Front->Next;
         Q->Front->Next=Q->Front->Next->Next;
         
-        printf("delete the number %d\n",temp->Date);
+        printf("delete the number %d\n",temp->Data);
         free(temp);
     }
     return Q;

@@ -8,7 +8,7 @@ using DStack = struct SNode *;
 
 struct SNode
 {
-     ElementType date[Maxsize];
+     ElementType data[Maxsize];
      int top[2];
 };
 
@@ -30,14 +30,14 @@ int Pop(DStack stack,int i)
             if(stack->top[0]==-1){
                 cout << "stack No 0 is empty,pop fail" << endl;  
             }else{
-                num = stack->date[(stack->top[0])--];
+                num = stack->data[(stack->top[0])--];
             }
             break;
         case 1 :
             if(stack->top[1]==Maxsize){
                 cout << "stack No 1 is empty,pop fail" << endl; 
             }else{
-                num = stack->date[(stack->top[1])++];
+                num = stack->data[(stack->top[1])++];
             }
             break;
         default:
@@ -55,14 +55,14 @@ void Push(DStack stack,int i,ElementType X)
             if(stack->top[0]+1 == stack->top[1]){
                 cout << "the doubel side stack is full,push fail" << endl;
             }else{
-                stack->date[++(stack->top[0])] = X;
+                stack->data[++(stack->top[0])] = X;
             }
             break;
         case 1:
             if(stack->top[0] == stack->top[1]-1){
                 cout << "the doubel side stack is full,push fail" << endl;
             }else{
-                stack->date[--(stack->top[1])] = X;
+                stack->data[--(stack->top[1])] = X;
             }
             break;
         default:

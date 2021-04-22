@@ -9,7 +9,7 @@ using Node = struct LNode*;
 
 struct LNode
 {
-    ElementType Date;
+    ElementType Data;
     CList Next;
 };
 
@@ -18,14 +18,14 @@ CList InitCLintList()
     CList L; 
     L =(CList)malloc(sizeof(struct LNode));
     L->Next = L; //循环
-    L->Date=100;
+    L->Data=100;
     return L;
 }
 
 Node Insert(CList L ,Node Rear,ElementType X)
 {
     Node node =(Node)malloc(sizeof(struct LNode));
-    node->Date = X;
+    node->Data = X;
     node->Next = L;
     Rear->Next = node;
     Rear = node;
@@ -36,8 +36,8 @@ void printCList(CList L)
 {
     Node ptr = L->Next;
     while(ptr != L){
-        //cout << ptr->Date << endl;
-        printf(" %d",ptr->Date);
+        //cout << ptr->Data << endl;
+        printf(" %d",ptr->Data);
         ptr = ptr->Next;
     }
     cout << endl;

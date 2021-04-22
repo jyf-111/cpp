@@ -41,7 +41,7 @@ typedef struct TNode
 typedef struct Node* Queue;
 struct Node
 {
-    int Date[Maxsize];
+    int Data[Maxsize];
     int Front;
     int Rear;
     int num;//队列当前高度
@@ -137,7 +137,7 @@ void InitQueue(Queue Q)
     Q->Rear = 0;
     Q->num = 0;
     for(int i = 0 ; i < Maxsize ; ++i){
-        Q->Date[i] = 0;
+        Q->Data[i] = 0;
     }
 }
 
@@ -147,7 +147,7 @@ bool Push(Queue Q,int X)
         cout << "Queue is full ,push fail" << endl;
         return false;
     }
-    Q->Date[Q->Rear] = X;
+    Q->Data[Q->Rear] = X;
     Q->num++;
     Q->Rear = (Q->Rear+1)%Maxsize;
     return true;
@@ -159,7 +159,7 @@ int Pop(Queue Q)
         cout << "the Queue is empty ,Pop fail" <<endl;
         return Null;
     }
-    int num = Q->Date[Q->Front];
+    int num = Q->Data[Q->Front];
     Q->Front = (Q->Front+1)%Maxsize;
     Q->num--;
     return num;

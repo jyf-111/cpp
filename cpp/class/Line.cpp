@@ -53,5 +53,11 @@ int main()
     Line line(myP1,myP2);
     Line line2(line);
     cout << line.getLen() << endl << line2.getLen() << endl;
+    //通过指针访问
+    /*int (Point::*p)()const = &Point::getX;
+    cout << "function ptr  -> myP2.getX()"<<(myP2.*p)() <<endl;
+    Point* ptr = &myP2;
+    cout << (ptr->*p)() << endl;
+    cout << ptr->getX();*/
     return 0;
 }

@@ -26,9 +26,9 @@ using namespace std;
 typedef struct HeapNode *Heap;
 struct HeapNode
 {
-    int date[MaxN];
+    int data[MaxN];
     int size;
-    HeapNode():date{Min},size(0) { }
+    HeapNode():data{Min},size(0) { }
 };
 
 /*插入最小堆*/
@@ -38,11 +38,11 @@ void insert(Heap H,int x)
     else {
         ++H->size;
         int i = H->size;
-        H->date[i] = x;//一定要防止下个循环没进
-        for(i = H->size ; H->date[i/2] > x ; i = i/2) {
-            H->date[i] = H->date[i/2];
+        H->data[i] = x;//一定要防止下个循环没进
+        for(i = H->size ; H->data[i/2] > x ; i = i/2) {
+            H->data[i] = H->data[i/2];
         }
-        H->date[i] = x ;
+        H->data[i] = x ;
     }
 }
 
@@ -52,8 +52,8 @@ void Trace(Heap H , int num)
     else {
         int i = num;
         for( ; i>=1 ;i = i / 2) {
-            if( i > 1)cout << H->date[i] << " ";
-            else if( i==1 )cout <<H->date[i];
+            if( i > 1)cout << H->data[i] << " ";
+            else if( i==1 )cout <<H->data[i];
         }
     }
 }

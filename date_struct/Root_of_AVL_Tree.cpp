@@ -33,14 +33,14 @@ struct TreeNode
 {
     Tree Left;
     Tree Right;
-    int date;
+    int data;
     int height;
 };
 
 Tree NewNode(int t)
 {
     Tree T = new struct TreeNode;
-    T->date = t;
+    T->data = t;
     T->height = 0;
     T->Left = T->Right = nullptr;
     return T;
@@ -94,10 +94,10 @@ Tree insert(Tree T, int t) {
 		T = NewNode(t);//建立一棵树的头结点 
 	}
 	else {
-		if (t > T->date) {//待插入的数据大于当前结点数据，则应该插在其右子树上面
+		if (t > T->data) {//待插入的数据大于当前结点数据，则应该插在其右子树上面
 			T->Right = insert(T->Right, t);
 			if (GetNodeHeight(T->Right) - GetNodeHeight(T->Left) == 2) {
-				if (t > T->Right->date) {
+				if (t > T->Right->data) {
 					T = SingleRightRotation(T);
 				}
 				else T = DoubleRightLeftRotation(T);
@@ -106,7 +106,7 @@ Tree insert(Tree T, int t) {
 		else {
 			T->Left = insert(T->Left, t);
 			if (GetNodeHeight(T->Left) - GetNodeHeight(T->Right) == 2) {
-				if (t < T->Left->date) {
+				if (t < T->Left->data) {
 					T = SingleLeftRotation(T);
 				}
 				else T = DoubleLeftRightRotation(T);
@@ -125,7 +125,7 @@ int main() {
 		cin >> t;
 		T = insert(T, t);
 	}
-	if (T)cout << T->date << endl;//T里面有内容认为是真，否则为假
+	if (T)cout << T->data << endl;//T里面有内容认为是真，否则为假
 	//system("pause");
 	return 0;
 }

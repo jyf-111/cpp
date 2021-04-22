@@ -37,7 +37,7 @@ output:
 struct Node
 {
     int Address;
-    int Date;
+    int Data;
     int Next;
     int flag;
 };
@@ -60,10 +60,10 @@ struct Node* InitList(){
     
     struct Node *List = (struct Node*)malloc(Maxsize*sizeof(struct Node));
     //第一个节点存放基本信息
-    scanf("%5d %d %d",&List[0].Address,&List[0].Date,&List[0].Next);
+    scanf("%5d %d %d",&List[0].Address,&List[0].Data,&List[0].Next);
     
-    for(i = 1 ; i<=List[0].Date ; i++){
-        scanf("%5d %d %d",&List[i].Address,&List[i].Date,&List[i].Next);
+    for(i = 1 ; i<=List[0].Data ; i++){
+        scanf("%5d %d %d",&List[i].Address,&List[i].Data,&List[i].Next);
         List[i].flag=0;
     }
     return List;
@@ -72,12 +72,12 @@ struct Node* InitList(){
 void PrintList(struct Node *List)
 {
     int i;
-    for( i = 1 ; i <= List[0].Date ; i++){
+    for( i = 1 ; i <= List[0].Data ; i++){
         if(List[i].flag==1){
             if(List[i].Next!=Null){
-                printf("%05d %d %05d\n",List[i].Address,List[i].Date,List[i].Next);
+                printf("%05d %d %05d\n",List[i].Address,List[i].Data,List[i].Next);
             }else{
-                printf("%05d %d %d\n",List[i].Address,List[i].Date,List[i].Next);
+                printf("%05d %d %d\n",List[i].Address,List[i].Data,List[i].Next);
             }
         }
     }
@@ -95,8 +95,8 @@ struct Node* Reserve(struct Node* List)
     int i,j,A=List[0].Address;
 
 /*排序链表并处理好多余节点*/
-    for(i = 1 ; i<=List[0].Date ; i++){
-        for( j = i ; j<=List[0].Date ;j++){
+    for(i = 1 ; i<=List[0].Data ; i++){
+        for( j = i ; j<=List[0].Data ;j++){
             if(List[j].Address==A){
                 A=List[j].Next;
                 Exchange(&List[j],&List[i]);
@@ -106,7 +106,7 @@ struct Node* Reserve(struct Node* List)
         }
     }
     int cnt=0;
-    for(i=1;i<=List[0].Date;i++){
+    for(i=1;i<=List[0].Data;i++){
         if(List[i].flag==1){
             cnt++;
         }
@@ -123,6 +123,6 @@ struct Node* Reserve(struct Node* List)
             List[i].Next=List[i+1].Address;
 
         }
-        if(List[0].Date==List[0].Next)List[i-1].Next=Null;
+        if(List[0].Data==List[0].Next)List[i-1].Next=Null;
     return List;
 }
