@@ -1,80 +1,83 @@
 #include<iostream>
 using namespace std;
-
-typedef int ElementType;
-typedef struct HNode *Heap;
-typedef Heap MaxHeap,MinHeap;
-
+typedef struct HNode* Heap;
+using ElementType = int;
+#define MAXDATA 100000
 struct HNode {
-    ElementType *Data;
+    ElementType *data;
     int Size;
     int Capacity;
 };
 
-#define MAXDATA 10000;
-
-MaxHeap CreateHeap( int Maxsize) {
-    MaxHeap H = new struct HNode;
-    H->Data = new ElementType[Maxsize+1];
-    H->Capacity = Maxsize;
+Heap CreateHeap(int SIZE){
+    Heap H;
+    H = new struct HNode;
+    H->data = new ElementType[SIZE+1];
+    H->Capacity = SIZE;
     H->Size = 0;
-    H->Data[0] = Maxsize;//из╠Ь
+    H->data[0] = MAXDATA;
     return H;
 }
 
-bool IsFull(MaxHeap H){
-    return H->Size == H->Capacity;
+void InsertHeap(Heap H,ElementType X){
+    int i = ++H->Size;
+    for(; X > H->data[i/2] ; i/=2){
+        H->data[i] = H->data[i/2];
+    }
+    H->data[i] = X;
 }
 
-bool IsEmpty(MaxHeap H){
-    return H->Size == 0;
-}
-
-bool Insert(MaxHeap H,ElementType X) {
-    int i;
-    if(IsFull(H)) {
-        cout << "the heap is full" << endl;
-        return false;
-    }
-    i = ++H->Size;
-    for(;H->Data[i/2]<X;i/=2){
-        H->Data[i]=  H->Data[i/2];
-    }
-    H->Data[i]= X;
-    cout << "yes" << endl; 
-    return true;
-}
-
-#define ERROR -1
-
-ElementType DeleteMax(MaxHeap H) {
-    int Parent , Child;
-    ElementType MaxItem,X;
-
-    if(IsEmpty(H)){
-        cout << " the heap is empty" << endl;
-        return ERROR;
-    }
-        MaxItem = H->Data[1];
-        X = H->Data[H->Size--];
-        for(Parent = 1;Parent*2<=H->Size;Parent = Child) {
-            Child = Parent * 2;
-            if((Child!=H->Size)&&H->Data[Child]<H->Data[Child+1]){
-                Child++;
-            }
-            if(X>=H->Data[Child])break;
-            else H->Data[Parent] = H->Data[Child];
+ElementType Delete(Heap H) {
+    int Parent ,Child;
+    ElementType MaxItem ,X;
+    MaxItem = H->data[1];
+    X = H->data[H->Size--];
+    for(Parent = 1 ; Parent*2 <=H->Size; Parent = Child){
+        Child = Parent*2;
+        if(Parent*2!=H->Size&&H->data[Child]<H->data[Child+1]){
+            Child++;
         }
-        H->Data[Parent] = X;
-        return MaxItem;
+        if(X>=H->data[Child])break;
+        else H->data[Parent] = H->data[Child];
+    }
+    H->data[Parent] = X;
+    return MaxItem;
 }
 
+void percDown(Heap H,int p) {
+    int Parent ,Child;
+    ElementType MaxItem ,X;
+    MaxItem = H->data[p];
+    X = H->data[H->Size--];
+    for(Parent = p ; Parent*2 <=H->Size; Parent = Child){
+        Child = Parent*2;
+        if(Parent*2!=H->Size&&H->data[Child]<H->data[Child+1]){
+            Child++;
+        }
+        if(X>=H->data[Child])break;
+        else H->data[Parent] = H->data[Child];
+    }
+    H->data[Parent] = X;
+}
+
+void buildHeap(Heap H){
+    for(int i = H->Size/2 ; i>0 ; --i){
+        percDown(H,i);
+    }
+}
 
 int main()
 {
-    MaxHeap H;
-    H = CreateHeap(3);
-    for(int i = 0 ; i<3; ++i){
-        Insert(H,i);
+    Heap H;
+    H = CreateHeap(10);
+    for(int i = 0 ;i <10 ; ++i){
+        InsertHeap(H,i);
+    }
+    for(int j = 0 ;j <10 ;j++){
+    Delete(H);
+    for(auto i =1; i<=H->Size ;++i){
+        cout << H->data[i] << ' ';
+    }
+    cout << endl;
     }
 }
