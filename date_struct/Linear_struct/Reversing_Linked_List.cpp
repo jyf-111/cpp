@@ -55,6 +55,7 @@ int main()
     PrintList(List);
     return 0;
 }
+
 struct Node* InitList(){
     int i;
     

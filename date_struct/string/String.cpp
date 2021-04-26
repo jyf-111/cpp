@@ -176,3 +176,51 @@ Status StrInsert(String S,int pos,String T) {
     }
 }
 
+/*  初始条件: 串S存在,1≤pos≤StrLength(S)-len+1 */
+/*  操作结果: 从串S中删除第pos个字符起长度为len的子串 */
+Status StrDelete(String S,int pos ,int len) {
+    int i;
+    if(pos <1 ||pos > S[0]-len +1 ||len < 0) {
+        return ERROR;
+    }
+    for(i = pos + len ; i<=S[0] ;++i){
+        S[i-len] = S[i];
+    }
+    S[0]-=len;
+    return OK;
+}
+
+/*  初始条件: 串S,T和V存在,T是非空串（此函数与串的存储结构无关） */
+/*  操作结果: 用V替换主串S中出现的所有与T相等的不重叠的子串 */
+Status Replace(String S,String T,String V) {
+    int i = 1;
+    if(StrEmpty(T))return ERROR;
+    do {
+        i = Index(S,T,i);
+        if(i){
+            StrDelete(S,i,StrLength(T));
+            StrInsert(S,i,V);
+            i +=StrLength(V);
+        }
+    }while(i);
+    return OK;
+}
+
+/*  输出字符串T */
+void StrPrint(String T) {
+    int i ;
+    for(i = 1; i<=T[0] ;++i){
+        std::cout << T[i] ;
+    }
+    std::cout << std::endl;
+}
+
+/*子串的替换*/
+Status RepStr1(String T, int i,int j,String V) {
+    int k;
+    String str;
+    str[0] = 0;
+    if(i <=0||i>T[0]||i+j-1>T[0]){
+        return FALSE;
+    }
+}
