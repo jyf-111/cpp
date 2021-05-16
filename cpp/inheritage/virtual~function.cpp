@@ -3,7 +3,7 @@ using namespace std;
 
 class Base {
 public:
-    virtual ~Base();//Ðé¹¹ 
+    virtual ~Base();
 };
 
 Base::~Base() {
