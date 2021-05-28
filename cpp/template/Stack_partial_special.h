@@ -55,4 +55,42 @@ void Stack<T,SIZE>::clear() {
     top == -1;
 }
 
+
+//偏特化
+template<int SIZE>
+class Stack<bool,SIZE> {
+private:
+    enum{
+        UNIT_BITS=sizeof(unsigned)*8,
+        ARRAY_SIZE=(SIZE-1)/UNIT_BITS+1
+    };
+    unsigned list[ARRAY_SIZE];
+    int top;
+public:
+    Stack();
+    void push(const bool &item);
+    bool pop();
+    void clear();
+    const bool& peek()const;
+    bool isEmpty()const;
+    bool isFull()const;
+    ~Stack() {}
+};
+template<int SIZE>
+void Stack<bool,SIZE>::push(const bool &item) {
+    assert(!isFull());
+    ++top;
+    int index = top/UNIT_BITS;
+    list[index] = list[index]<<1 | (item?1:0);
+}
+
+template<int SIZE>
+bool Stack<bool,SIZE>::pop() {
+    assert(!isEmpty());
+    int index = top--/UNIT_BITS;
+    bool result = (list[index] & 1)==1;
+    list >>= 1;
+    return result;
+}
+
 #endif

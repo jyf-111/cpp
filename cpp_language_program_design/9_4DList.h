@@ -49,6 +49,9 @@ public:
     int delete_first();
     int delete_last();
     void printList();
+    int getCount() const {
+        return count;
+    }
 };
 
 template<class T>
@@ -131,7 +134,7 @@ int DoubleLink<T>::insert(int index,T t) {
 template<class T>
 int DoubleLink<T>::insert_first(T t) {
     DNode<T>* pnode  = new DNode<T>(t, phead, phead->next);
-	phead->next->prev = pnode;
+	phead->next->pre = pnode;
 	phead->next = pnode;
 	count++;
  

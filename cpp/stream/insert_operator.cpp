@@ -24,5 +24,10 @@ int main()
         cout<< setw(6) << setiosflags(ios_base::left) << s[i] 
         << setw(10) << resetiosflags(ios_base::left) << a[i] << endl;
     }
-    
+
+    double x = 3466.9768;
+
+    cout << setiosflags(ios_base::fixed) << x << resetiosflags(ios_base::fixed)<<endl;
+    //cout << setiosflags(ios_base::scientific)<< x << resetiosflags(ios_base::scientific)<< endl;
+    cout << setprecision(1) << x << endl;   
 }

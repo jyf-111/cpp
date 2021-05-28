@@ -8,11 +8,12 @@ using std::vector;
 
 int main()
 {
+    /*
 //直接初始化
     vector<int> v1(10,1);
     v1 = {1,2,3,4,5,6,7,8,9};
     vector<int> v2{9,8,7,6,5};
-/*    int i=0;
+    int i=0;
     for(auto &i : v1){
         cout << i << ' ';
     }
@@ -45,7 +46,7 @@ int main()
             break;
         }
         mid = beg + (end - beg) / 2 ;
-    }*/
+    }
 //insert
     v1.insert(v1.begin(),{1,2,3});
     for( auto &i : v1 ){
@@ -58,5 +59,20 @@ int main()
         cout<< i << " ";
     }
     cout << endl;
+*/
 
+
+//容器失效
+    vector<int>s;
+    s.reserve(3);
+    s.push_back(1);
+    s.push_back(2);
+    vector<int>::iterator iter1 = s.begin();
+    int *p1 = &s[0];
+    vector<int>::iterator iter2 = s.begin()+1;
+    int *p2 = &s[1];
+
+    s.insert(s.begin()+1,3);
+    cout << &*iter1 << " " << &*p1 << endl;
+    cout << &*iter2 << " " << &*p2 << endl;
 }
