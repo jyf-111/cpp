@@ -15,7 +15,7 @@ void Print( List L ); /* 细节在此不表；空链表将输出NULL */
 List Merge( List L1, List L2 );
 
 int main()
-{M
+{
     List L1, L2, L;
     L1 = Read();
     L2 = Read();
