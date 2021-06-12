@@ -119,11 +119,24 @@ void Visit( Vertex V )
 void DFS( LGraph Graph, Vertex V, void (*Visit)(Vertex) )
 {   /* 以V为出发点对邻接表存储的图Graph进行DFS搜索 */
     PtrToAdjVNode W;
-    
+    static int Visited[100] = {0};
     Visit( V ); /* 访问第V个顶点 */
     Visited[V] = true; /* 标记V已访问 */
 
     for( W=Graph->G[V].FirstEdge; W; W=W->Next ) /* 对V的每个邻接点W->AdjV */
         if ( !Visited[W->AdjV] )    /* 若W->AdjV未被访问 */
             DFS( Graph, W->AdjV, Visit );    /* 则递归访问之 */
+}
+int main()
+{
+/*
+5 5
+0 1 1
+1 2 1
+2 4 1
+4 0 1
+0 3 1
+*/
+    LGraph Graph = BuildGraph();
+    DFS(Graph,0,Visit);
 }

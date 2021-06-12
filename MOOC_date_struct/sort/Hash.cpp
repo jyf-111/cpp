@@ -51,25 +51,16 @@ int NextPrime(int N) {
     if(N>2 && N<=3) p = 3;
     return p;
 }
-#define MinTableSize 1
+
 HashTable InitializeTable(int TableSize) {
     HashTable H;
     int i;
-    if(TableSize < MinTableSize) {
-        cerr << "散列表太小" << endl;
-        return NULL;
-    }
+    
     H = (HashTable)malloc(sizeof(struct HashTbl));
-    if(H == NULL) {
-        cerr << "申请内存失败" << endl;
-        return NULL;
-    }
+    
     H->TableSize = NextPrime(TableSize);
     H->TheCells = (Cell*)malloc(sizeof(Cell)*H->TableSize);
-    if(H->TheCells == NULL) {
-        cerr << "申请内存失败" << endl;
-        return NULL;
-    }
+    
     for(i=0 ; i< H->TableSize ; ++i ) {
         H->TheCells[i].Info = Empty;
     }
