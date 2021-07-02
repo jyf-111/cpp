@@ -6,10 +6,10 @@ void ShellInsert(int a[],int n,int delta) {
         if(a[i-delta]>a[i]) {
             a[0] = a[i];
             int j;
-            for(j=i;j>0 && a[0]<a[j-delta] ;j-=delta) {
-                a[j-delta] = a[j];
+            for(j=i-delta;j>0 && a[0]<a[j] ;j-=delta) {
+                a[j+delta] = a[j];
             }
-            a[j] = a[0];
+            a[j+delta] = a[0];
         }
     }
 }
@@ -22,8 +22,9 @@ void ShellSort(int a[],int n,int delta[],int len) {
 
 int main()
 {
-    int a[11]={0,0,1,2,3,4,5,6,7,8,9};
+    int a[11]={0,0,2,1,3,5,4,8,7,6,9};
     int delta[] ={1,4,13,40,121,364,1093,3280,9841,29524,88573,265720,797161,2391484,7174453,21523360};
+    ShellSort(a,sizeof(a)/sizeof(decltype(a[0])),delta,2);
     for(auto i:a) {
         cout << i<<" ";
     }

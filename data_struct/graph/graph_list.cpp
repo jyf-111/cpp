@@ -51,12 +51,12 @@ void InsertEdge(LGraph Graph,Edge E) {
     NewNode->Next = Graph->G[E->V1].FirstEdge;
     NewNode->Weight = E->Weight;
     Graph->G[E->V1].FirstEdge = NewNode;
-
+/*
     NewNode = new struct AdjVNode;
     NewNode->AdjV=E->V1;
     NewNode->Next = Graph->G[E->V2].FirstEdge;
     NewNode->Weight = E->Weight;
-    Graph->G[E->V2].FirstEdge = NewNode;
+    Graph->G[E->V2].FirstEdge = NewNode;*/
 }
 
 LGraph BuildGraph() {
@@ -155,20 +155,107 @@ void DFS_path(LGraph Graph,int u,int v){
         }
 }
 
+void FindId(LGraph G,int indegree[]) {
+    int i;
+    PtrToAdjVNode p;
+    for(int i=0;i<MaxVertexNum;i++) {
+        indegree[i] = 0;
+    }
+    for(i = 0;i<G->Nv;i++) {
+        p = G->G[i].FirstEdge;
+        while(p) {
+            indegree[p->AdjV]++;
+            p = p->Next;
+        }
+    }
+}
+
+
+void TopSort(LGraph Graph) {
+    int indegree[MaxVertexNum];
+    FindId(Graph,indegree);
+    stack<Vertex> S;
+    for(int i=0;i<Graph->Nv;i++) {
+        if(indegree[i]==0) {
+            S.push(i);
+        }
+    }
+    while(!S.empty()) {
+        Vertex V = S.top();
+        S.pop();
+        cout << V << "->" ;
+        for(PtrToAdjVNode p = Graph->G[V].FirstEdge ; p ;p = p->Next) {
+            indegree[p->AdjV]--;
+            if(indegree[p->AdjV]==0) S.push(p->AdjV);
+        }
+    }
+} 
+
+int ve[MaxVertexNum]={0};
+stack<Vertex> T;
+void TopOrder(LGraph Graph,stack<Vertex> *T) {
+    stack<Vertex> S;
+    int indegree[MaxVertexNum];
+    FindId(Graph,indegree);
+    for(int i=0;i<Graph->Nv;i++) {
+        if(indegree[i]==0) S.push(i);
+    }
+    while(!S.empty()) {
+        Vertex V = S.top();
+        S.pop();
+        T->push(V);
+        for(PtrToAdjVNode p = Graph->G[V].FirstEdge ; p ; p = p->Next) {
+            indegree[p->AdjV]--;
+            if(indegree[p->AdjV]==0) {
+                S.push(p->AdjV);
+            }
+            if(ve[V]+p->Weight > ve[p->AdjV]) {
+                ve[p->AdjV] = ve[V] + p->Weight;
+            }
+        }
+    }
+}
+
+void CriticalPath(LGraph Graph) {
+    stack<Vertex> T;//返回逆序拓扑排序的栈
+    int vl[MaxVertexNum] ;
+    
+    TopOrder(Graph,&T);
+    for(auto &i:vl) {
+        i = ve[Graph->Nv-1];
+    }
+    while(!T.empty()) {
+        Vertex V = T.top();
+        T.pop();
+        for(PtrToAdjVNode p = Graph->G[V].FirstEdge ; p ; p = p->Next) {
+            if(vl[p->AdjV]-p->Weight < vl[V] ) {
+                vl[V] = vl[p->AdjV] - p->Weight;
+            }
+        }
+    }
+    for(int i=0;i<Graph->Nv;i++) {
+        for(PtrToAdjVNode p = Graph->G[i].FirstEdge ; p; p =p->Next) {
+            if(ve[i]+p->Weight == vl[p->AdjV]) {
+                cout << "(" << i<< "," << p->AdjV << ")" << endl;
+            }
+        }
+    }
+}
+
 int main()
 {
 /*
 8 10
 0 1 1
-0 2 1
-1 3 1
-1 4 1
-2 5 1
-2 6 1
-3 7 1
-4 7 1
-5 7 1
-6 7 1
+0 2 2
+1 3 3
+1 4 4
+2 5 5
+2 6 6
+3 7 7
+4 7 8
+5 7 9
+6 7 10
 */
     LGraph Graph = BuildGraph();
     DFS(Graph,0);
@@ -189,5 +276,19 @@ int main()
     DepthFirstSearch(Graph,0);
     cout << endl;
     one_path(Graph,0,7);
+    cout << endl << "TopSort : ";
+    TopSort(Graph);
+    cout << endl;
     
+    TopOrder(Graph,&T);
+    for(int i=0 ;i<Graph->Nv;i++) {
+        cout << ve[i] << " ";
+    }
+    cout << endl << "T : ";
+    while(!T.empty()) {
+        cout << T.top() << ' ';
+        T.pop();
+    }
+    cout << endl << "critical Path : " << endl;
+    CriticalPath(Graph);
 }

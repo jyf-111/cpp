@@ -77,4 +77,7 @@ int main()
 {
     createGraph();
     Dijkstra(1);
+    for(auto i:path) {
+        cout << path[i] << " ";
+    }
 }

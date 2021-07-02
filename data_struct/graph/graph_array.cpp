@@ -23,7 +23,7 @@ Graph CreateGraph(int Nv) {
     Graph->Ne=0;
     for(Vertex V=0;V<Nv;V++){
         for(Vertex W=0;W<Nv;W++) {
-            Graph->G[V][W] = INT_MAX;
+            Graph->G[V][W] = 9999;
         }
     } 
     return Graph;
@@ -31,7 +31,7 @@ Graph CreateGraph(int Nv) {
 
 void Insert(Graph Graph,Edge E) {
     Graph->G[E->V1][E->V2] = E->Weight;
-    Graph->G[E->V2][E->V1] = E->Weight;
+    //Graph->G[E->V2][E->V1] = E->Weight;
 }
 
 Graph BuildGraph() {
@@ -113,6 +113,86 @@ void Prim(Graph Graph,int u) {
     }
 }
 
+int FindMin(Graph Graph,int dist[],bool collect[]) {
+    int min=999,m=-1;
+    for(int i=0 ;i<Graph->Nv;i++) {
+        if(dist[i]<min && !collect[i] ) {
+            min = dist[i];
+            m = i;
+        }
+    }
+    return m;
+}
+
+void Dijkstra(Graph Graph,Vertex S) {
+    bool collect[Maxsize] ;
+    for(auto &i:collect) {
+        collect[i] = false;
+    }
+    int dist[Maxsize];
+    int path[Maxsize];
+    Vertex V,W;
+    for(V = 0;V<Graph->Nv;V++) {
+        dist[V] = Graph->G[S][V];
+        if(dist[V]<INT_MAX) {
+            path[V] = S;
+        }else{
+            path[V] = -1;
+        }
+    }
+    path[S] = -1;
+    collect[S] = true;
+    while(1) {
+        V = FindMin(Graph,dist,collect);
+        if(V==-1) break;
+        collect[V] = true;
+        for(W = 0;W<Graph->Nv;W++) {
+            if(!collect[W] && Graph->G[V][W]<INT_MAX) {
+                if(dist[V]+Graph->G[V][W] < dist[W]) {
+                    dist[W] = dist[V]+Graph->G[V][W];
+                    path[W] = V;
+                }
+            }
+        }
+    }
+    for(int i=0 ;i<Graph->Nv;i++) {
+        cout <<dist[i] << " ";
+    }
+}
+
+void Floyd(Graph Graph) {
+    int dist[Maxsize][Maxsize];
+    int path[Maxsize][Maxsize];
+    for(int V = 0;V<Graph->Nv;V++) {
+        for(int W = 0;W<Graph->Nv;W++) {
+            if(V==W) dist[V][W] = 0;
+            else 
+            dist[V][W] = Graph->G[V][W];
+            path[V][W] = -1; 
+        }
+    }
+    int k,v,w;
+        for(k = 0; k < Graph->Nv; k++){
+        //v为起点 
+        for(v = 0 ; v < Graph->Nv; v++){
+            //w为终点 
+            for(w =0; w < Graph->Nv; w++){
+                if(dist[v][w] > (dist[v][k] + dist[k][w])){
+                    dist[v][w] = dist[v][k] + dist[k][w];//更新最小路径 
+                    path[v][w] = k;//更新最小路径中间顶点 
+                }
+            }
+        }
+    }
+
+    for(int V = 0;V<Graph->Nv;V++) {
+        for(int W = 0;W<Graph->Nv;W++) {
+            cout << dist[V][W] << " "; 
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
 /*
@@ -134,5 +214,10 @@ int main()
     cout << endl;
     BFS(Graph,0);
     Prim(Graph,0);
+    cout << endl << "Dijkstra : " << endl;
+    Dijkstra(Graph,0);
+    cout << endl;
+
+    Floyd(Graph);
 }
 
