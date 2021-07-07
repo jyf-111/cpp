@@ -6,29 +6,25 @@ void separatepn(int a[],int n)
 using namespace std;
 void separatepn(int a[],int n) {
     int i=1;
-    int j=n;
+    int j=n-1;
     while(i<j) {
-        a[0] = a[i];
         while(i<j && a[j]<0) {
             j--;
         }
-        if(i<j) {
-            a[i] = a[j];
+        
+        while(i<j && a[i]>=0) {
             i++;
         }
-        while(i<j && a[i]>00) {
-            j--;
+        swap(a[i],a[j]);
+        for(int i=0 ;i<13;i++) {
+            cout << a[i] << " ";
         }
-        if(i<j) {
-            a[j] = a[i];
-            j--;
-        }
+        cout << endl;
     }
-    a[i] = a[0];
 }
 int main()
 {
-    int a[]={0,1,2,3,4,5,6,-1,-1,-2,-3,-4,-5};
+    int a[]={-1,-1,-2,-3,-4,-5,0,1,2,3,4,5,6};
     separatepn(a,sizeof(a)/sizeof(int));
     for(auto i:a) {
         cout << i << " ";
