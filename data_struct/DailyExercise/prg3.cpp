@@ -29,14 +29,12 @@ void createlink(List *pla)
 }
 
 void LinkReverse(List *pla) {
-	Node* p = (*pla)->next;
-	Node* q;
-	(*pla)->next = nullptr;
+	Node* p = (*pla)->next->next;
 	while(p) {
-		q = p->next;
-		p->next = (*pla)->next;
-		(*pla)->next = p;
-		p = q;
+		Node *temp = p;
+		p = p->next;
+		temp->next = (*pla)->next;
+		(*pla)->next = temp;
 	}
 }
 
