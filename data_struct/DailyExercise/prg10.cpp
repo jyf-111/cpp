@@ -10,8 +10,8 @@ int nosame(int *a, int m, int n) {
 	for(int i=7 ;i<=(m+1)*(n+1) ;i++) {
 		if(i%6 ==0)
 			continue;
-		for(int j=6;j<=(m+1)*(n+1) ;j++) {
-			if(j%6 ==0 || i==j)
+		for(int j=i+1;j<=(m+1)*(n+1) ;j++) {
+			if(j%6 ==0)
 				continue;
 			if(a[i]==a[j] ) {
 				return -1;

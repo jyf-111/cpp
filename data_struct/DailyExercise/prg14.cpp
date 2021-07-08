@@ -28,7 +28,7 @@ void CreateTree(BiTree *t) {
 //设计第二个函数
 //该函数的功能是统计t所指向的树的非叶子节点数，并返回该值。
 int NodeNum( BiTree t ) {
-	if(t->lchild->data==-1 && t->rchild->data==-1 || !t->lchild && !t->rchild) {
+	if(t->lchild->data==-1 && t->rchild->data==-1) {
 		return 0;
 	}else{
 		if(t->lchild->data==-1) {

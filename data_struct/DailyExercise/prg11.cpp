@@ -16,10 +16,6 @@ void separatepn(int a[],int n) {
             i++;
         }
         swap(a[i],a[j]);
-        for(int i=0 ;i<13;i++) {
-            cout << a[i] << " ";
-        }
-        cout << endl;
     }
 }
 int main()
